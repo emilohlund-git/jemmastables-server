@@ -35,6 +35,7 @@ export const createFolder = async (req: Request, res: Response) => {
 
 export const deleteFolder = async (req: Request, res: Response) => {
   const path = req.body.path;
+  console.log(path);
   const model = new DeleteFolderRequestModel(path);
   const response = await client.DeleteFolder(model);
   return res.status(204).send(response);
