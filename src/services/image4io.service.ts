@@ -58,7 +58,7 @@ export const getImage = async (req: Request, res: Response) => {
 export const uploadImage = async (req: Request, res: Response) => {
   if (req.files) {
     const file: any = req.files![0];
-    const request = new UploadImagesRequestModel('horses', true, true, [
+    const request = new UploadImagesRequestModel(req.body.path, true, true, [
       {
         FileName: file.originalname,
         FilePath: file.path,
@@ -81,6 +81,7 @@ export const uploadImage = async (req: Request, res: Response) => {
 };
 
 export const deleteImage = async (req: Request, res: Response) => {
+  console.log(req.body.name);
   const name = req.body.name;
   const model = new DeleteImageRequest(name);
   const response = await client.DeleteImage(model);

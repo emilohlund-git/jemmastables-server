@@ -26,6 +26,7 @@ const typeDefs = gql`
     name: String!
     nickname: String
     movie: String
+    profile: String
     images: [String]!
     owner: String!
     after: String!
