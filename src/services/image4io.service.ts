@@ -69,10 +69,10 @@ export const uploadImage = async (req: any, res: Response) => {
 
     const response = await client.UploadImage(request);
 
-    fs.readdir('./uploads/', (err, files) => {
+    fs.readdir('./tmp', (err, files) => {
       if (err) throw err;
       for (const file of files) {
-        fs.unlink(`./uploads/${file}`, (err) => {
+        fs.unlink(`./tmp/${file}`, (err) => {
           if (err) throw err;
         });
       }

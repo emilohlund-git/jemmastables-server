@@ -7,9 +7,15 @@ import cors from 'cors';
 import image4io from './routes/image4io';
 import dotenv from 'dotenv';
 import neoSchema from './neoSchema';
+import fs from 'fs';
 dotenv.config();
 
 const main = async () => {
+  var dir = './tmp';
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+
   const PORT = process.env.PORT || 4000;
   const app = express();
 
