@@ -9,6 +9,7 @@ import {
 } from '../services/image4io.service';
 import multer from 'multer';
 import path from 'path';
+require('dotenv').config();
 
 if (process.env.NODE_ENV === 'production') {
   var storage = multer.diskStorage({
