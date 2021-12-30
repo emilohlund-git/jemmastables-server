@@ -47,7 +47,7 @@ export const getImage = async (req: Request, res: Response) => {
   const model = new GetImageRequest(name);
   let response;
 
-  try  {
+  try {
     response = await client.GetImage(model);
   } catch (err) {
     return res.status(400).send(err.message);
@@ -68,12 +68,14 @@ export const uploadImage = async (req: Request, res: Response) => {
     const response = await client.UploadImage(request);
     console.log(response);
 
-    for (const file of req.files) {
-      fs.unlink(file.path, function (err) {
-        if (err) {
-          console.log(err);
-        }
-      });
+    for (const [key, value] of Object.entries(req.files)) {
+      if (key === 'path') {
+        fs.unlink(value, function (err) {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
     }
 
     return res.status(200).send(response);
