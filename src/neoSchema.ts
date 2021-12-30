@@ -9,11 +9,20 @@ const typeDefs = gql`
     password: String! @private
   }
 
-  type Partners {
+  type Partner {
     name: String!
     description: String!
-    image: String!
+    logo: PartnerLogo
+      @relationship(type: "PARTNER_LOGO_OWNER", direction: OUT)
     website: String
+  }
+
+  type PartnerLogo {
+    url: String!
+    path: String!
+    width: Int!
+    height: Int!
+    owner: Partner @relationship(type: "PARTNER_LOGO_OWNER", direction: IN)
   }
 
   type Facility {

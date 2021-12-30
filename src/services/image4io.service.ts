@@ -82,10 +82,8 @@ export const uploadImage = async (req: Request, res: Response) => {
 };
 
 export const deleteImage = async (req: Request, res: Response) => {
-  console.log(req.body.path);
   const path = req.body.path;
   const model = new DeleteFileRequestModel(path);
-  console.log(model);
   const response = await client.DeleteImage(model);
   return res.status(204).send(response);
 };
