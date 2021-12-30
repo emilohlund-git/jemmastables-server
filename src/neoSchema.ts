@@ -22,12 +22,20 @@ const typeDefs = gql`
     images: [String]!
   }
 
+  type HorseImage {
+    url: String!
+    path: String!
+    width: Int!
+    height: Int!
+    profile: Boolean!
+    owner: Horse @relationship(type: "IMAGE_OWNER", direction: IN)
+  }
+
   type Horse {
     name: String!
     nickname: String
     movie: String
-    profile: String
-    images: [String]
+    images: [HorseImage] @relationship(type: "IMAGE_OWNER", direction: OUT)
     owner: String!
     after: String!
     birthyear: String!
