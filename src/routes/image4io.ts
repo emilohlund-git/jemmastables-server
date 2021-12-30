@@ -27,7 +27,6 @@ router.post('/folders', createFolder);
 router.delete('/folders', deleteFolder);
 
 router.get('/image', getImage);
-
 router.post('/image', upload.any(), uploadImage);
 router.delete('/image', deleteImage);
 

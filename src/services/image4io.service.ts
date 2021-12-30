@@ -1,11 +1,11 @@
 import {
-  DeleteImageRequest,
   GetImageRequest,
   Image4ioClient,
-  UploadFile,
+  UploadFile
 } from '@image4io/image4ionodejssdk';
 import CreateFolderRequestModel from '@image4io/image4ionodejssdk/out/Models/CreateFolderRequest';
 import DeleteFolderRequestModel from '@image4io/image4ionodejssdk/out/Models/DeleteFolderRequest';
+import DeleteFileRequestModel from '@image4io/image4ionodejssdk/out/Models/DeleteImageRequest';
 import ListFolderRequestModel from '@image4io/image4ionodejssdk/out/Models/ListFolderRequest';
 import UploadImagesRequestModel from '@image4io/image4ionodejssdk/out/Models/UploadImagesRequest';
 import { Request, Response } from 'express';
@@ -82,9 +82,11 @@ export const uploadImage = async (req: Request, res: Response) => {
 };
 
 export const deleteImage = async (req: Request, res: Response) => {
-  console.log(req.body.name);
-  const name = req.body.name;
-  const model = new DeleteImageRequest(name);
+  console.log(req.body.path);
+  const path = req.body.path;
+  const model = new DeleteFileRequestModel(path);
+  console.log(model);
   const response = await client.DeleteImage(model);
   return res.status(204).send(response);
 };
+
