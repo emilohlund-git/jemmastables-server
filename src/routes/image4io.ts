@@ -12,25 +12,15 @@ import multer from 'multer';
 
 require('dotenv').config();
 
-if (process.env.NODE_ENV === 'production') {
-  var storage = multer.diskStorage({
-    destination: function (_req, _file, cb) {
-      cb(null, path.join(__dirname, 'uploads/'));
-    },
-    filename: function (_req, file, cb) {
-      cb(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);
-    },
-  });
-} else {
-  var storage = multer.diskStorage({
-    destination: function (_req, _file, cb) {
-      cb(null, 'uploads/');
-    },
-    filename: function (_req, file, cb) {
-      cb(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);
-    },
-  });
-}
+const storage = multer.diskStorage({
+  destination: function (_req, _file, cb) {
+    cb(null, 'uploads/');
+  },
+
+  filename: function (_req, file, cb) {
+    cb(null, 'attachment' + path.extname(file.originalname));
+  },
+});
 
 const upload = multer({ storage: storage });
 

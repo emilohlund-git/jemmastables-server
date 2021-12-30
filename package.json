@@ -19,8 +19,9 @@
     "@neo4j/graphql": "^2.5.3",
     "apollo-server": "^3.5.0",
     "apollo-server-express": "^3.5.0",
-    "aws-sdk": "^2.1047.0",
+    "aws-sdk": "^2.1048.0",
     "axios": "^0.24.0",
+    "body-parser": "^1.19.1",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^10.0.0",
@@ -30,6 +31,7 @@
     "express-session": "^1.17.2",
     "graphql": "^16.2.0",
     "multer": "^1.4.4",
+    "multer-s3": "^2.10.0",
     "neo4j-driver": "^4.4.1",
     "nodemon": "^2.0.15",
     "request": "^2.88.2"
@@ -40,6 +42,7 @@
     "@types/express-formidable": "^1.2.0",
     "@types/express-session": "^1.17.4",
     "@types/multer": "^1.4.7",
+    "@types/multer-s3": "^2.7.11",
     "@types/request": "^2.48.7",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4"

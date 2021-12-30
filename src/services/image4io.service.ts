@@ -10,18 +10,11 @@ import ListFolderRequestModel from '@image4io/image4ionodejssdk/out/Models/ListF
 import UploadImagesRequestModel from '@image4io/image4ionodejssdk/out/Models/UploadImagesRequest';
 import { Request, Response } from 'express';
 import fs from 'fs';
-import path from 'path';
 require('dotenv').config();
 
 const apiKey = process.env.IMAGE4IO_USERNAME;
 const apiSecret = process.env.IMAGE4IO_PASSWORD;
 const client = new Image4ioClient(apiKey, apiSecret);
-
-try {
-  fs.mkdirSync(path.join(__dirname, '/uploads/'));
-} catch (err) {
-  if (err.code !== 'EEXIST') throw err;
-}
 
 /* FOLDERS */
 export const getFolders = async (req: Request, res: Response) => {
@@ -64,24 +57,28 @@ export const getImage = async (req: Request, res: Response) => {
 };
 
 export const uploadImage = async (req: any, res: any) => {
+  console.log(req.files);
   if (req.files) {
-    const file: any = req.files[0];
+    const file = req.files[0];
     const request = new UploadImagesRequestModel(req.body.path, true, true, [
       {
         FileName: file.originalname,
         FilePath: file.path,
       } as UploadFile,
     ]);
-    const response = await client.UploadImage(request);
-    console.log(response);
 
-    for (const file of req.files) {
-      fs.unlink(file.path, function (err) {
-        if (err) {
-          console.log(err);
-        }
-      });
-    }
+    const response = await client.UploadImage(request);
+
+    fs.readdir('./uploads/', (err, files) => {
+      if (err) throw err;
+      for (const file of files) {
+        fs.unlink(`./uploads/${file}`, (err) => {
+          if (err) throw err;
+        });
+      }
+    });
+
+    console.log(response);
 
     return res.status(200).send(response);
   } else {
