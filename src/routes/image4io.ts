@@ -14,7 +14,7 @@ require('dotenv').config();
 if (process.env.NODE_ENV === 'production') {
   var storage = multer.diskStorage({
     destination: function (_req, _file, cb) {
-      cb(null, path.resolve(__dirname, 'build'));
+      cb(null, "build/");
     },
     filename: function (_req, file, cb) {
       cb(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   var storage = multer.diskStorage({
     destination: function (_req, _file, cb) {
-      cb(null, path.resolve(__dirname, 'uploads'));
+      cb(null, "uploads/");
     },
     filename: function (_req, file, cb) {
       cb(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);

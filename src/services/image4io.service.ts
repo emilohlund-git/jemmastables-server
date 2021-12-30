@@ -1,7 +1,7 @@
 import {
   GetImageRequest,
   Image4ioClient,
-  UploadFile
+  UploadFile,
 } from '@image4io/image4ionodejssdk';
 import CreateFolderRequestModel from '@image4io/image4ionodejssdk/out/Models/CreateFolderRequest';
 import DeleteFolderRequestModel from '@image4io/image4ionodejssdk/out/Models/DeleteFolderRequest';
@@ -47,7 +47,7 @@ export const getImage = async (req: Request, res: Response) => {
   const model = new GetImageRequest(name);
   let response;
 
-  try {
+  try  {
     response = await client.GetImage(model);
   } catch (err) {
     return res.status(400).send(err.message);
@@ -67,14 +67,15 @@ export const uploadImage = async (req: Request, res: Response) => {
     ]);
     const response = await client.UploadImage(request);
     console.log(response);
-    fs.readdir('./uploads/', (err, files) => {
-      if (err) throw err;
-      for (const file of files) {
-        fs.unlink(`./uploads/${file}`, (err) => {
-          if (err) throw err;
-        });
-      }
-    });
+
+    for (const file of req.files) {
+      fs.unlink(file.path, function (err) {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+
     return res.status(200).send(response);
   } else {
     return res.status(400).send({ response: 'Please, file.' });
@@ -87,4 +88,3 @@ export const deleteImage = async (req: Request, res: Response) => {
   const response = await client.DeleteImage(model);
   return res.status(204).send(response);
 };
-

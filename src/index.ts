@@ -1,5 +1,4 @@
 import express from 'express';
-import formidable from 'express-formidable';
 import session from 'express-session';
 import { createServer } from 'http';
 import { ApolloServer } from 'apollo-server-express';
@@ -19,6 +18,8 @@ const main = async () => {
 
   if (__prod__) {
     app.use(express.static(path.resolve(__dirname, 'build')));
+  } else {
+    app.use(express.static("./uploads"))
   }
 
   app.use(
@@ -58,8 +59,6 @@ const main = async () => {
   await server.start();
 
   server.applyMiddleware({ app, cors: false });
-
-  app.use(formidable());
 
   const httpServer = createServer(app);
 
