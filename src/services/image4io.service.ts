@@ -10,11 +10,18 @@ import ListFolderRequestModel from '@image4io/image4ionodejssdk/out/Models/ListF
 import UploadImagesRequestModel from '@image4io/image4ionodejssdk/out/Models/UploadImagesRequest';
 import { Request, Response } from 'express';
 import fs from 'fs';
+import path from 'path';
 require('dotenv').config();
 
 const apiKey = process.env.IMAGE4IO_USERNAME;
 const apiSecret = process.env.IMAGE4IO_PASSWORD;
 const client = new Image4ioClient(apiKey, apiSecret);
+
+try {
+  fs.mkdirSync(path.join(__dirname, '/uploads/'));
+} catch (err) {
+  if (err.code !== 'EEXIST') throw err;
+}
 
 /* FOLDERS */
 export const getFolders = async (req: Request, res: Response) => {
