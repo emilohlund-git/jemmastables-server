@@ -58,7 +58,7 @@ export const getImage = async (req: Request, res: Response) => {
 
 export const uploadImage = async (req: Request, res: Response) => {
   if (req.files) {
-    const file: any = req.files![0];
+    const file: any = req.files;
     const request = new UploadImagesRequestModel(req.body.path, true, true, [
       {
         FileName: file.originalname,
