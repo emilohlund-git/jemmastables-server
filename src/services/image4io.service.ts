@@ -56,9 +56,9 @@ export const getImage = async (req: Request, res: Response) => {
   return res.status(200).send(response);
 };
 
-export const uploadImage = async (req: Request, res: Response) => {
+export const uploadImage = async (req: any, res: any) => {
   if (req.files) {
-    const file: any = req.files;
+    const file: any = req.files[0];
     const request = new UploadImagesRequestModel(req.body.path, true, true, [
       {
         FileName: file.originalname,
@@ -68,14 +68,12 @@ export const uploadImage = async (req: Request, res: Response) => {
     const response = await client.UploadImage(request);
     console.log(response);
 
-    for (const [key, value] of Object.entries(req.files)) {
-      if (key === 'path') {
-        fs.unlink(value, function (err) {
-          if (err) {
-            console.log(err);
-          }
-        });
-      }
+    for (const file of req.files) {
+      fs.unlink(file.path, function (err) {
+        if (err) {
+          console.log(err);
+        }
+      });
     }
 
     return res.status(200).send(response);
