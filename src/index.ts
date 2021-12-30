@@ -8,6 +8,7 @@ import cors from 'cors';
 import image4io from './routes/image4io';
 import dotenv from 'dotenv';
 import neoSchema from './neoSchema';
+import path from 'path';
 dotenv.config();
 
 const main = async () => {
@@ -15,6 +16,10 @@ const main = async () => {
   const app = express();
 
   app.use(express.json());
+
+  if (__prod__) {
+    app.use(express.static(path.resolve(__dirname, 'build')));
+  }
 
   app.use(
     cors({
