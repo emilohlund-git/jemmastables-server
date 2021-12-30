@@ -22,7 +22,7 @@ const main = async () => {
         'http://localhost:3000',
         'https://studio.apollographql.com',
         'http://localhost:4000/graphql',
-        'https://jemmastables.vercel.app/',
+        'https://jemmastables.vercel.app',
       ],
       credentials: true,
     }),
