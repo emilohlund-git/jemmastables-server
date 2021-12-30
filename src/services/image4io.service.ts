@@ -56,7 +56,7 @@ export const getImage = async (req: Request, res: Response) => {
   return res.status(200).send(response);
 };
 
-export const uploadImage = async (req: any, res: any) => {
+export const uploadImage = async (req: any, res: Response) => {
   console.log(req.files);
   if (req.files) {
     const file = req.files[0];
