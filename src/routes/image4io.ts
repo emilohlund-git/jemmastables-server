@@ -10,14 +10,26 @@ import {
 import multer from 'multer';
 import path from 'path';
 
-const storage = multer.diskStorage({
-  destination: function (_req, _file, cb) {
-    cb(null, path.resolve(__dirname, 'uploads/'));
-  },
-  filename: function (_req, file, cb) {
-    cb(null, 'temp' + path.extname(file.originalname));
-  },
-});
+if (process.env.NODE_ENV === 'production') {
+  var storage = multer.diskStorage({
+    destination: function (_req, _file, cb) {
+      cb(null, path.resolve(__dirname, 'uploads/'));
+    },
+    filename: function (_req, file, cb) {
+      cb(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);
+    },
+  });
+} else {
+  var storage = multer.diskStorage({
+    destination: function (_req, _file, cb) {
+      cb(null, path.resolve(__dirname, 'uploads'));
+    },
+    filename: function (_req, file, cb) {
+      cb(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);
+    },
+  });
+}
+
 const upload = multer({ storage: storage });
 
 const router = express.Router();
