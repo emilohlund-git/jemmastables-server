@@ -21,23 +21,42 @@ export const getFolders = async (req: Request, res: Response) => {
   const path = req.body.path;
   const continuationToken = req.body.continuationToken;
   const model = new ListFolderRequestModel(path, continuationToken);
-  const response = await client.ListFolder(model);
-  console.log(response);
+  let response;
+  try {
+    response = await client.ListFolder(model);
+  } catch {
+    return res.status(400).send({
+      error: 'Could not get the folders.',
+    });
+  }
   return res.status(200).send(response);
 };
 
 export const createFolder = async (req: Request, res: Response) => {
   const path = req.body.path;
   const model = new CreateFolderRequestModel(path);
-  const response = await client.CreateFolder(model);
+  let response;
+  try {
+    response = await client.CreateFolder(model);
+  } catch {
+    return res.status(400).send({
+      error: 'Could not create the folder.',
+    });
+  }
   return res.status(201).send(response);
 };
 
 export const deleteFolder = async (req: Request, res: Response) => {
   const path = req.body.path;
-  console.log(path);
-  const model = new DeleteFolderRequestModel(path);
-  const response = await client.DeleteFolder(model);
+  let response;
+  try {
+    const model = new DeleteFolderRequestModel(path);
+    response = await client.DeleteFolder(model);
+  } catch {
+    return res.status(400).send({
+      error: 'Could not delete the folder.',
+    });
+  }
   return res.status(204).send(response);
 };
 
@@ -50,7 +69,9 @@ export const getImage = async (req: Request, res: Response) => {
   try {
     response = await client.GetImage(model);
   } catch (err) {
-    return res.status(400).send(err.message);
+    return res.status(400).send({
+      error: 'Could not get the image.',
+    });
   }
 
   return res.status(200).send(response);
@@ -67,7 +88,15 @@ export const uploadImage = async (req: any, res: Response) => {
       } as UploadFile,
     ]);
 
-    const response = await client.UploadImage(request);
+    let response;
+
+    try {
+      response = await client.UploadImage(request);
+    } catch {
+      return res.status(400).send({
+        error: 'Could not upload the image.',
+      });
+    }
 
     fs.readdir('./tmp', (err, files) => {
       if (err) throw err;
@@ -78,17 +107,22 @@ export const uploadImage = async (req: any, res: Response) => {
       }
     });
 
-    console.log(response);
-
     return res.status(200).send(response);
   } else {
-    return res.status(400).send({ response: 'Please, file.' });
+    return res.status(400).send({ error: 'No image attached.' });
   }
 };
 
 export const deleteImage = async (req: Request, res: Response) => {
   const path = req.body.path;
   const model = new DeleteFileRequestModel(path);
-  const response = await client.DeleteImage(model);
+  let response;
+  try {
+    response = await client.DeleteImage(model);
+  } catch {
+    return res.status(400).send({
+      error: 'Could not delete the image.',
+    });
+  }
   return res.status(204).send(response);
 };

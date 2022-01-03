@@ -77,10 +77,11 @@ const typeDefs = gql`
 
   type User {
     id: ID @id
+    uid: String!
     name: String!
-    password: String!
-    phonenumber: String!
-    email: String! @unique
+    profilePicture: String
+    phonenumber: String
+    email: String!
     timeslots: [TimeSlot] @relationship(type: "BOOKED_TIMES", direction: IN)
   }
 
@@ -97,8 +98,9 @@ const typeDefs = gql`
   type TimeSlot {
     to: String!
     from: String!
+    slots: Int
     type: TimeSlotType! @relationship(type: "TIMESLOT_TYPE", direction: OUT)
-    users: User @relationship(type: "BOOKED_TIMES", direction: OUT)
+    users: [User] @relationship(type: "BOOKED_TIMES", direction: OUT)
     date: DateSlot! @relationship(type: "TIMESLOTS", direction: OUT)
   }
 `;

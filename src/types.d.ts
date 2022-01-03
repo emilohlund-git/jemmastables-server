@@ -7,4 +7,11 @@ type File = {
   filename: string;
   path: string;
   size: number;
-}
+};
+
+type HttpStatusCode = {
+  OK: number;
+  BAD_REQUEST: number;
+  NOT_FOUND: number;
+  INTERNAL_SERVER: number;
+};
