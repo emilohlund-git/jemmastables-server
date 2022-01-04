@@ -5,11 +5,11 @@ import { Neo4jGraphQL } from '@neo4j/graphql';
 const typeDefs = gql`
   type Admin {
     id: ID @id
-    username: String!
-    password: String! @private
+    uid: String!
   }
 
   type Partner {
+    id: ID @id
     name: String!
     description: String!
     logo: PartnerLogo
@@ -25,10 +25,20 @@ const typeDefs = gql`
     owner: Partner @relationship(type: "PARTNER_LOGO_OWNER", direction: IN)
   }
 
+  type FacilityImage {
+    url: String!
+    path: String!
+    width: Int!
+    height: Int!
+    profile: Boolean!
+    owner: Facility @relationship(type: "FACILITY_IMAGE_OWNER", direction: IN)
+  }
+
   type Facility {
+    id: ID @id
     name: String!
     description: String!
-    images: [String]!
+    images: [FacilityImage]! @relationship(type: "FACILITY_IMAGE_OWNER", direction: OUT)
   }
 
   type HorseImage {
@@ -41,6 +51,7 @@ const typeDefs = gql`
   }
 
   type Horse {
+    id: ID @id
     name: String!
     nickname: String
     movie: String

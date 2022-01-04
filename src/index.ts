@@ -54,6 +54,7 @@ const main = async () => {
 
   const server = new ApolloServer({
     schema: neoSchema.schema,
+    introspection: true,
     context: ({ req }) => ({ req }),
   });
 

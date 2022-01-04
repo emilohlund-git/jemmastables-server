@@ -92,9 +92,9 @@ export const uploadImage = async (req: any, res: Response) => {
 
     try {
       response = await client.UploadImage(request);
-    } catch {
+    } catch (error) {
       return res.status(400).send({
-        error: 'Could not upload the image.',
+        error: 'Could not upload the image: ' + error,
       });
     }
 
