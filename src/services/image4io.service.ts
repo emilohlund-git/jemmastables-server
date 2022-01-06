@@ -115,7 +115,8 @@ export const uploadImage = async (req: any, res: Response) => {
 
 export const deleteImage = async (req: Request, res: Response) => {
   const path = req.body.path;
-  const model = new DeleteFileRequestModel(path);
+  console.log(path);
+  const model = new DeleteFileRequestModel(path.split("/jemmastables")[1]);
   let response;
   try {
     response = await client.DeleteImage(model);
